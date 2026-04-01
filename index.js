@@ -1,5 +1,5 @@
 const express = require("express") // requires vs import, commonjs vs es modules
-
+const userRoute = require('./src/routes/user.route')
 const app = express()
 
 // Route
@@ -16,10 +16,6 @@ const app = express()
 
     // Function (Callback): (req, res) => {} // possui dois parametros, request e response, que sao objetos que representam a requisicao e resposta da rota. O request possui informacoes sobre a requisicao, como parametros, corpo, etc. O response possui metodos para enviar a resposta ao cliente, como res.send(), res.json(), etc.
 
-app.get('/soma', function (req, res) {
-    const soma = 1000+3
-    
-    res.send({soma:soma})
-})
+app.use("/soma", userRoute)
 
 app.listen(3000)
