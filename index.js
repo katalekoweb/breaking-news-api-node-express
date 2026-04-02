@@ -16,6 +16,8 @@ const app = express()
 
     // Function (Callback): (req, res) => {} // possui dois parametros, request e response, que sao objetos que representam a requisicao e resposta da rota. O request possui informacoes sobre a requisicao, como parametros, corpo, etc. O response possui metodos para enviar a resposta ao cliente, como res.send(), res.json(), etc.
 
-app.use("/soma", userRoute)
+app.use(express.json())
+app.use("/user", userRoute)
 
-app.listen(3000)
+const port = 3000
+app.listen(port, () => console.log(`Servidor rodando na porta ${port}`))
