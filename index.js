@@ -1,5 +1,6 @@
-const express = require("express") // requires vs import, commonjs vs es modules
-const userRoute = require('./src/routes/user.route')
+import express from "express" // requires vs import, commonjs vs es modules
+import userRoute from './src/routes/user.route.js'
+import connectDb from "./src/database/db.js"
 const app = express()
 
 // Route
@@ -15,6 +16,8 @@ const app = express()
     // Names:Identificador da rota. Deve ser unico
 
     // Function (Callback): (req, res) => {} // possui dois parametros, request e response, que sao objetos que representam a requisicao e resposta da rota. O request possui informacoes sobre a requisicao, como parametros, corpo, etc. O response possui metodos para enviar a resposta ao cliente, como res.send(), res.json(), etc.
+
+connectDb()
 
 app.use(express.json())
 app.use("/user", userRoute)
