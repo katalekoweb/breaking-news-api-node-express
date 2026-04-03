@@ -1,6 +1,4 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-dotenv.config();
 
 const connectDB = () => {
     console.log("Se conectando ao banco de dados");  

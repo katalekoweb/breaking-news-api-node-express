@@ -1,6 +1,9 @@
 import express from "express" // requires vs import, commonjs vs es modules
 import userRoute from './src/routes/user.route.js'
 import connectDb from "./src/database/db.js"
+import dotenv from 'dotenv';
+
+dotenv.config();
 const app = express()
 
 // Route
@@ -22,5 +25,5 @@ connectDb()
 app.use(express.json())
 app.use("/user", userRoute)
 
-const port = 3000
+const port =  process.env.PORT || 3000
 app.listen(port, () => console.log(`Servidor rodando na porta ${port}`))
