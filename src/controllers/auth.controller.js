@@ -14,8 +14,11 @@ const login = async (req, res) => {
     if (!passwordIsValid) return res.status(404).send({message: "Invalid user or password"});
 
     // aunthentication successful, return user data without password
+    // JW - Json Web Token
+    // uma forma segura de autenticar o usuario, gerando um token que pode ser usado para acessar rotas protegidas
 
-    res.send("Login Ok");
+    const token = authService.generateToken(user._id);
+    res.status(200).send({ message: "Login successful", token });
   } catch (error) {
     res
       .status(500)
