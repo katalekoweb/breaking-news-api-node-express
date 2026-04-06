@@ -6,7 +6,7 @@ const getAll = async (req, res) => {
     const posts = await postService.getAll();
 
     if (posts.length === 0) return res.status(404).send({ message: "No posts found" });
-    
+
     res.status(200).send(posts);
   } catch (error) {
     res.status(500).send({ message: "Error: ", error: error.message });
@@ -15,6 +15,7 @@ const getAll = async (req, res) => {
 
 const create = async (req, res) => {
   try {
+    
     const { title, text, banner } = req.body;
     if (!title || !text || !banner)
       return res
@@ -22,7 +23,7 @@ const create = async (req, res) => {
         .send({ message: "Title, text and banner are required" });
 
     const data = req.body;
-    data.user = new mongoose.Types.ObjectId("69cfeb720c46c5ba2c553012");
+    data.user = new mongoose.Types.ObjectId(req.userId);
 
     const post = await postService.create(data);
     res.status(201).send({message: "Post created", post});
