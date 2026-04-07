@@ -14,4 +14,10 @@ const update = (id, body) => Post.findByIdAndUpdate(id, body, { new: true })
 
 const deletePost = (id) => Post.findByIdAndDelete(id)
 
-export default { create, getAll, findById, featured, countDocuments, update, deletePost }
+const searchByTitle = (title) => Post.find({
+        title: {$regex: `${title || ""}`, $options: "i"},
+    })
+    .sort({_id: -1})
+    .populate("user")
+
+export default { create, getAll, searchByTitle, findById, featured, countDocuments, update, deletePost }
