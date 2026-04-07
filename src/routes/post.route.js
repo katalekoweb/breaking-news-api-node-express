@@ -6,8 +6,9 @@ const router = Router();
 
 router.get("/", authMiddleware, postController.getAll)
 router.post("/", authMiddleware, postController.create)
-route.get("/search", authMiddleware, postController.searchByTitle)
+router.get("/search", authMiddleware, postController.searchByTitle)
 router.get("/featured", authMiddleware, postController.featured)
+router.get("/up/:username", authMiddleware, postController.findByUser)
 router.get("/:id", authMiddleware, postController.findById)
 router.patch("/:id", authMiddleware, postController.update)
 router.delete("/:id", authMiddleware, postController.destroy)

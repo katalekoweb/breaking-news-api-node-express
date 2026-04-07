@@ -1,4 +1,5 @@
 import postService from "../services/post.service.js";
+import userService from "../services/user.service.js";
 import mongoose from "mongoose";
 
 const getAll = async (req, res) => {
@@ -153,16 +154,16 @@ const destroy = async (req, res) => {
   }
 };
 
-const searchByTitle = async () => {
+const searchByTitle = async (req, res) => {
   try {
-    const title = req.query.title
+    const title = req.query.title;
 
     const posts = await postService.searchByTitle(title);
 
     if (posts.length === 0) {
       return res.status(400).send({
-        message: "There are no posts with this words"
-      })
+        message: "There are no posts with this words",
+      });
     }
 
     res.status(200).send({
@@ -182,17 +183,62 @@ const searchByTitle = async () => {
         comments: post.comments,
         createdAt: post.createdAt,
       })),
-    })
-
+    });
   } catch (error) {
     res.status(500).send({ message: "Error: ", error: error.message });
   }
+};
+
+const findByUser = async (req, res) => {
+  try {
+    const username = req.params.username;
+
+    // get the user
+    const user = await userService.findByUsername(username);
+
+    if (!user) {
+      return res.status(404).send({
+        message: "User not found",
+      });
+    }
+
+    const posts = await postService.findByUser(user?.id);
+
+    if (posts.length === 0) {
+      return res.status(400).send({
+        message: "There are no posts with this words",
+      });
+    }
+
+    res.status(200).send({
+      results: posts.map((post) => ({
+        id: post._id,
+        title: post.title,
+        text: post.text,
+        banner: post.banner,
+        user: {
+          id: post.user._id,
+          name: post.user.name,
+          username: post.user.username,
+          email: post.user.email,
+          avatar: post.user.avatar,
+        },
+        likes: post.likes,
+        comments: post.comments,
+        createdAt: post.createdAt,
+      })),
+    });
+  } catch (err) {
+    res.status(500).send({ message: "Error: ", error: error.message });
+  }
+  
 };
 
 export default {
   getAll,
   create,
   findById,
+  findByUser,
   featured,
   update,
   destroy,

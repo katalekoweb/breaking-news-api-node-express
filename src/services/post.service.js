@@ -20,4 +20,6 @@ const searchByTitle = (title) => Post.find({
     .sort({_id: -1})
     .populate("user")
 
-export default { create, getAll, searchByTitle, findById, featured, countDocuments, update, deletePost }
+const findByUser = (id) => Post.find({user:id}).sort({_id: -1}).populate("user")
+
+export default { create, getAll, searchByTitle, findById, featured, findByUser, countDocuments, update, deletePost }
