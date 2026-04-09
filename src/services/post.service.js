@@ -10,7 +10,7 @@ const findById = (id) => Post.findById(id).populate("user")
 
 const featured = () => Post.findOne().sort({_id: -1}).populate("user")
 
-const update = (id, body) => Post.findByIdAndUpdate(id, body, { new: true })
+const update = (id, body) => Post.findOneAndUpdate({ _id: id }, body, { rawResult: true })
 
 const deletePost = (id) => Post.findByIdAndDelete(id)
 

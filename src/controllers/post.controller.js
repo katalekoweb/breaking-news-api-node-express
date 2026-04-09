@@ -136,6 +136,15 @@ const update = async (req, res) => {
   const id = req.params.id;
 
   try {
+
+    if (!req.body.title && !req.body.text && !req.body.banner) return res.status(400).send({ message: "Please at least one of title, text or banner is required" });
+
+    const post = await postService.findById(id);
+
+    if (!post) return res.status(404).send({ message: "Post not found" });
+
+    if (post.user._id.toString() !== req.userId) return res.status(403).send({ message: "You are not the owner of this post" });
+
     await postService.update(id, req.body);
     res.status(200).send({ message: "Post updated" });
   } catch (error) {
