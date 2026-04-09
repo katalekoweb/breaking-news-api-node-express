@@ -156,8 +156,16 @@ const destroy = async (req, res) => {
   const id = req.params.id;
 
   try {
+
+    const post = await postService.findById(id);
+
+    if (!post) return res.status(404).send({ message: "Post not found" });
+
+    if (post.user._id.toString() !== req.userId) return res.status(403).send({ message: "You are not the owner of this post" });
+
     await postService.deletePost(id);
-    res.status(200).send({ message: "Post deleted" });
+    res.status(200).send({ message: "Post deleted successfully" });
+
   } catch (error) {
     res.status(500).send({ message: "Error: ", error: error.message });
   }
@@ -243,6 +251,31 @@ const findByUser = async (req, res) => {
   
 };
 
+const like = async (req, res) => {
+  try {
+    const id = req.params.id;
+    let post = await postService.findById(id);
+
+    if (!post) return res.status(404).send({ message: "Post not found" });
+
+    const userId = req.userId;
+
+    const liked = await postService.like(id, userId);
+
+    if (!liked) {
+      const unlike = await postService.unlike(id, userId);
+      post = await postService.findById(id);
+      res.status(200).send({ message: "Post unliked", post });
+    }
+    
+    post = await postService.findById(id);
+    res.status(200).send({ message: "Post liked", post });
+
+  } catch (error) {
+    res.status(500).send({ message: "Error: ", error: error.message });
+  }
+}
+
 export default {
   getAll,
   create,
@@ -250,6 +283,7 @@ export default {
   findByUser,
   featured,
   update,
+  like,
   destroy,
   searchByTitle,
 };

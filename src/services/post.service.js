@@ -22,4 +22,7 @@ const searchByTitle = (title) => Post.find({
 
 const findByUser = (id) => Post.find({user:id}).sort({_id: -1}).populate("user")
 
-export default { create, getAll, searchByTitle, findById, featured, findByUser, countDocuments, update, deletePost }
+const like = async (id, userId) => Post.findOneAndUpdate({_id: id, "likes.userId": {$nin: [userId]}}, {$push: {likes: {userId, createdAt: new Date()}}}, { new: true }) 
+const unlike = async (id, userId) => Post.findOneAndUpdate({_id: id}, {$pull: {likes: {userId}}}, { new: true }) 
+
+export default { create, getAll, searchByTitle, findById, featured, findByUser, countDocuments, update, like, unlike, deletePost }
