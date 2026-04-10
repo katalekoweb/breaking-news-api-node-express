@@ -276,6 +276,54 @@ const like = async (req, res) => {
   }
 }
 
+const addComment = async (req, res) => {
+  try {
+
+    const postId = req.params.id
+    const userId = req.userId
+    const comment = req.body.comment
+
+    if (!comment) { // 400 - bad request
+      return res.status(400).send({ message: "Comment is required" })
+    }
+
+    await postService.addComment(postId, userId, comment)
+    res.status(200).send({ message: "Comment added successfully" })
+
+  } catch (error) {
+    res.status(500).send({ message: "Error: ", error: error.message });
+  }
+
+}
+
+const deleteComment = async (req, res) => {
+  try {
+    const postId = req.params.postId
+    const commentId = req.params.commentId
+
+    const commentDeleted = await postService.deleteComment(postId, commentId, req.userId)
+
+    const commentFinder = commentDeleted.comments.find(
+      (comment) => comment.commentId === commentId
+    )
+
+    console.log(commentDeleted, commentFinder, commentFinder?.commentId, commentId); 
+    
+    if (!commentFinder) {
+      return res.status(404).send({message: "Comment not found"})
+    }
+
+    if (commentFinder.userId !== req.userId) {
+      return res.status(400).send({message: "You are not the owner of this comment"})
+    }
+    
+    res.status(200).send({ message: "Comment deleted successfully" })
+
+  } catch (error) {
+    res.status(500).send({ message: "Error: ", error: error.message });
+  }
+}
+
 export default {
   getAll,
   create,
@@ -286,4 +334,6 @@ export default {
   like,
   destroy,
   searchByTitle,
+  addComment,
+  deleteComment
 };
