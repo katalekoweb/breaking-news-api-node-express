@@ -3,6 +3,7 @@ import express from "express" // requires vs import, commonjs vs es modules
 import userRoute from './src/routes/user.route.js'
 import authRoute from './src/routes/auth.route.js'
 import postRoute from './src/routes/post.route.js'
+import swaggerRoute from './src/routes/swagger.route.js'
 
 import connectDb from "./src/database/db.js"
 import dotenv from 'dotenv';
@@ -30,6 +31,7 @@ app.use(express.json())
 app.use("/auth", authRoute)
 app.use("/users", userRoute)
 app.use("/posts", postRoute)
+app.use("/docs", swaggerRoute)
 
 const port =  process.env.PORT || 3000
 app.listen(port, () => console.log(`Servidor rodando na porta ${port}`))

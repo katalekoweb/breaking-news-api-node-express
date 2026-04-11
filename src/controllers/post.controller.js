@@ -306,8 +306,6 @@ const deleteComment = async (req, res) => {
     const commentFinder = commentDeleted.comments.find(
       (comment) => comment.commentId === commentId
     )
-
-    console.log(commentDeleted, commentFinder, commentFinder?.commentId, commentId); 
     
     if (!commentFinder) {
       return res.status(404).send({message: "Comment not found"})
