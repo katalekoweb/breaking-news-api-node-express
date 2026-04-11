@@ -4,7 +4,7 @@ import {Router} from "express"
 import route from "./user.route.js";
 const router = Router();
 
-router.get("/", authMiddleware, postController.getAll)
+router.get("/", postController.getAll)
 router.post("/", authMiddleware, postController.create)
 router.get("/search", authMiddleware, postController.searchByTitle)
 router.get("/featured", authMiddleware, postController.featured)
