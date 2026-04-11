@@ -11,6 +11,9 @@
     "servers": [{
         "url": "http://localhost:3000",
         "description": "Local server"
+    }, {
+        "url": "https://breaking-news-api-a622.onrender.com",
+        "description": "Remote server in render"
     }],
     "paths": {
         "/auth/login": {
@@ -333,8 +336,7 @@
                 "summary": "Get posts searching by title",
                 "description": "This endpoint allows you to retrieve a list of posts searching by title.",
                 "tags": ["Posts"],
-                "parameters": [
-                    {
+                "parameters": [{
                         "name": "title",
                         "in": "query",
                         "required": false,
@@ -397,8 +399,7 @@
                 "summary": "Get posts by user",
                 "description": "This endpoint allows you to retrieve a list of posts filtering by user.",
                 "tags": ["Posts"],
-                "parameters": [
-                    {
+                "parameters": [{
                         "name": "username",
                         "in": "path",
                         "required": false,
