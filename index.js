@@ -8,6 +8,8 @@ import swaggerRoute from './src/routes/swagger.route.js'
 import connectDb from "./src/database/db.js"
 import dotenv from 'dotenv';
 
+import cors from 'cors';
+
 dotenv.config();
 const app = express()
 
@@ -26,6 +28,10 @@ const app = express()
     // Function (Callback): (req, res) => {} // possui dois parametros, request e response, que sao objetos que representam a requisicao e resposta da rota. O request possui informacoes sobre a requisicao, como parametros, corpo, etc. O response possui metodos para enviar a resposta ao cliente, como res.send(), res.json(), etc.
 
 connectDb()
+
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
 
 app.use(express.json())
 app.use("/auth", authRoute)
