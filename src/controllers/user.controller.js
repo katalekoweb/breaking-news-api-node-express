@@ -1,36 +1,22 @@
 import userService from "../services/user.service.js";
 
 const create = async (req, res) => {
-  // const user = req.body
-  // destruct
   try {
-    const { name, username, email, password, avatar, background } = req.body;
-
-    if (!name || !username || !email || !password || !avatar || !background) {
-      res.status(400).send({ message: "Submit all required fields" });
-    }
-
     const user = await userService.create(req.body);
-
-    if (!user) {
-      res.status(400).send({ message: "Error creating user" });
-    }
 
     res.status(201).send({
       message: "User created successful",
       user: {
         id: user._id,
-        name,
-        username,
-        email,
-        avatar,
-        background,
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        avatar: user.avatar,
+        background: user.background,
       },
     });
   } catch (error) {
-    res
-      .status(500)
-      .send({ message: "There was an error: ", error: error.message });
+    res.status(500).send({ message: "There was an error: ", error: error.message });
   }
 };
 
