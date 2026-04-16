@@ -6,7 +6,7 @@ const getAll = async (req, res) => {
   try {
     let { limit, offset } = req.query;
 
-    limit = Number(limit) || 3;
+    limit = Number(limit) || 10;
     offset = Number(offset) || 0;
 
     const posts = await postService.getAll(limit, offset);
