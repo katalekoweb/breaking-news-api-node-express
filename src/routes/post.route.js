@@ -6,7 +6,7 @@ const router = Router();
 
 router.get("/", postController.getAll)
 router.post("/", authMiddleware, postController.create)
-router.get("/search", authMiddleware, postController.searchByTitle)
+router.get("/search", postController.searchByTitle)
 router.get("/featured", postController.featured)
 router.get("/up/:username", authMiddleware, postController.findByUser)
 router.get("/:id", postController.findById)
