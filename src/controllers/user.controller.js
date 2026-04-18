@@ -1,11 +1,15 @@
+import authService from "../services/auth.service.js";
 import userService from "../services/user.service.js";
 
 const create = async (req, res) => {
   try {
     const user = await userService.create(req.body);
 
+    const token = authService.generateToken(user._id);
+
     res.status(201).send({
       message: "User created successful",
+      token,
       user: {
         id: user._id,
         name: user.name,
