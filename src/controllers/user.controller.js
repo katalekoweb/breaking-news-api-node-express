@@ -44,9 +44,6 @@ const findAll = async (req, res) => {
 
 const logged = async (req, res) => {
   try {
-    // const { id } = req.params
-    // const id = req. params.id
-    const id = req.id;
     const user = req.user;
 
     res.status(200).send({
@@ -60,11 +57,14 @@ const logged = async (req, res) => {
 };
 
 const findById = async (req, res) => {
+
   try {
     // const { id } = req.params
     // const id = req. params.id
-    const id = req.id;
-    const user = req.user;
+    // const id = req.id;
+    // const user = req.user;
+
+    const user = await userService.findById(id)
 
     res.status(200).send({
       user,
