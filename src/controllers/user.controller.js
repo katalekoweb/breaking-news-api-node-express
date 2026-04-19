@@ -42,6 +42,23 @@ const findAll = async (req, res) => {
   }
 };
 
+const logged = async (req, res) => {
+  try {
+    // const { id } = req.params
+    // const id = req. params.id
+    const id = req.id;
+    const user = req.user;
+
+    res.status(200).send({
+      user,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "There was an error: ", error: error.message });
+  }
+};
+
 const findById = async (req, res) => {
   try {
     // const { id } = req.params
@@ -91,4 +108,4 @@ const update = async (req, res) => {
   }
 };
 
-export default { create, findAll, findById, update };
+export default { create, findAll, findById, update, logged };
