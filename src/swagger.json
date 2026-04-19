@@ -177,6 +177,37 @@
                 }
             }
         },
+        "/users/logged": {
+            "get": {
+                "summary": "Get logged user",
+                "description": "This endpoint allows you to retrieve the logged user.",
+                "tags": ["Users"],
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "responses": {
+                    "200": {
+                        "description": "User retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
         "/users/{id}": {
             "patch": {
                 "summary": "Update a user from a patch",
