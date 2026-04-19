@@ -7,7 +7,7 @@ import { validateId, validateUser } from "../middlewares/global.middlewares.js"
 
 route.post("/", userController.create)
 route.get("/", authMiddleware, userController.findAll)
-route.get("/logged", authMiddleware, validateId, validateUser, userController.logged)
+route.get("/logged", authMiddleware, userController.logged)
 route.get("/:id", authMiddleware, validateId, validateUser, userController.findById)
 route.patch("/:id", authMiddleware, validateId, validateUser, userController.update)
 
