@@ -529,7 +529,7 @@
             }
         },
         "/posts/{id}": {
-            "patch": {
+            "put": {
                 "summary": "Update a post from id using patch",
                 "description": "This endpoint allows you to update a post by its ID.",
                 "tags": ["Posts"],

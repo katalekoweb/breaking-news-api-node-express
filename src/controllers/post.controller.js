@@ -247,7 +247,7 @@ const findByUser = async (req, res) => {
     });
   } catch (err) {
     res.status(500).send({ message: "Error: ", error: error.message });
-  }
+  } 
   
 };
 
