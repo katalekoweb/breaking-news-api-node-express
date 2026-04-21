@@ -57,7 +57,7 @@ const getAll = async (req, res) => {
 const create = async (req, res) => {
   try {
     const { title, text, banner } = req.body;
-    if (!title || !text || !banner)
+    if (!title || !text)
       return res
         .status(400)
         .send({ message: "Title, text and banner are required" });
@@ -137,7 +137,7 @@ const update = async (req, res) => {
 
   try {
 
-    if (!req.body.title && !req.body.text && !req.body.banner) return res.status(400).send({ message: "Please at least one of title, text or banner is required" });
+    if (!req.body.title && !req.body.text) return res.status(400).send({ message: "Please at least one of title, text is required" });
 
     const post = await postService.findById(id);
 
