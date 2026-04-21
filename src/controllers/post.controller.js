@@ -60,7 +60,7 @@ const create = async (req, res) => {
     if (!title || !text)
       return res
         .status(400)
-        .send({ message: "Title, text and banner are required" });
+        .send({ message: "Title and text are required" });
 
     const data = req.body;
     data.user = new mongoose.Types.ObjectId(req.userId);
