@@ -14,11 +14,20 @@ const update = (id, body) => Post.findOneAndUpdate({ _id: id }, body, { rawResul
 
 const deletePost = (id) => Post.findByIdAndDelete(id)
 
-const searchByTitle = (title) => Post.find({
-        title: {$regex: `${title || ""}`, $options: "i"},
-    })
-    .sort({_id: -1})
-    .populate("user")
+const searchByTitle = (title) => {
+  const cleanTitle = (title || "")
+    .replace(/^#/, "")
+    .trim();
+
+  return Post.find({
+    $or: [
+      { title: { $regex: cleanTitle, $options: "i" } },
+      { text: { $regex: cleanTitle, $options: "i" } },
+    ],
+  })
+    .sort({ _id: -1 })
+    .populate("user");
+};
 
 const findByUser = (id) => Post.find({user:id}).sort({_id: -1}).populate("user")
 
